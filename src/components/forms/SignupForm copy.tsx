@@ -10,16 +10,12 @@ import {
   Link,
   Checkbox,
 } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/toast";
 import { FormControl, FormLabel, FormErrorMessage } from "@chakra-ui/form-control";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-/**
- * Create Account / Signup form
- * Design reference (local path will be transformed to a URL by your toolchain):
- *   /mnt/data/Create Account.pdf
- */
+import { useRouter } from "next/navigation";
 
 const SignupSchema = z
   .object({
@@ -39,6 +35,8 @@ const SignupSchema = z
 type SignupForm = z.infer<typeof SignupSchema>;
 
 export default function SignupForm({ onSuccess }: { onSuccess?: (payload: any) => void }) {
+  const router = useRouter();
+  const toast = useToast();
   const {
     register,
     handleSubmit,
@@ -57,13 +55,33 @@ export default function SignupForm({ onSuccess }: { onSuccess?: (payload: any) =
   });
 
   const submit = async (data: SignupForm) => {
-    // replace with your auth API call (NextAuth or custom)
-    // Example: await fetch('/api/auth/signup', { method: 'POST', body: JSON.stringify(data) })
-    console.log("Signup payload:", { ...data, password: "***" });
-    onSuccess?.(data);
+    try {
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          mobile: data.mobile,
+        }),
+      });
+      const json = await res.json();
+      if (!json?.success) {
+        toast({ title: "Signup failed", description: json?.error ?? "Unknown", status: "error" });
+        return;
+      }
+      toast({ title: "Account created", description: "Verification email sent", status: "success" });
+      onSuccess?.(json);
+      // go to verify email screen where user can enter token or follow link
+      router.push("/auth/verify-email");
+    } catch (err: any) {
+      toast({ title: "Network error", description: String(err?.message ?? err), status: "error" });
+    }
   };
 
-  // Local PDF path for design reference (will be turned into a URL by your infra)
+  // Local design link (will be transformed by your toolchain)
   const designPdf = "/mnt/data/Create Account.pdf";
 
   return (
