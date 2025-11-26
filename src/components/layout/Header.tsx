@@ -2,7 +2,13 @@
 import React from "react";
 import NextImage from 'next/image';
 import img from '../../assets/image 4.png';
-import { Box, Flex, HStack, Button, Text } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/layout';
+import { Box } from '@chakra-ui/layout';
+import { HStack } from '@chakra-ui/layout';
+import { Button } from '@chakra-ui/button';
+import { Text } from '@chakra-ui/typography';
+import { Checkbox } from '@chakra-ui/checkbox';
+import { Image } from '@chakra-ui/image';
 import { useRouter } from "next/navigation";
 
 export default function Header() {
