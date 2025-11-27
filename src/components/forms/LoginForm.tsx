@@ -7,6 +7,10 @@ import {
   Button,
   Text,
   Link,
+  Heading,
+  HStack,
+  Divider,
+  Icon,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/toast";
 import { FormControl, FormLabel, FormErrorMessage } from "@chakra-ui/form-control";
@@ -89,57 +93,84 @@ export default function LoginForm() {
   const designPdf = "/mnt/data/Login.pdf";
 
   return (
-    <Box
-      maxW="450px"
-      mx="auto"
-      p={6}
-      bg="white"
-      borderRadius="md"
-      boxShadow="sm"
-      mt={10}
-    >
-      <Stack gap={6}>
-        <Text fontSize="2xl" fontWeight="700" textAlign="center">
-          Login
-        </Text>
+    <Box mx="auto" mt={{ base: 6, md: 12 }} px={{ base: 4, md: 0 }}>
+      <Box
+        maxW={{ base: "100%", md: "540px" }}
+        mx="auto"
+        bg="white"
+        borderRadius="lg"
+        boxShadow="md"
+        overflow="hidden"
+      >
+        <Stack direction={{ base: "column", md: "column" }} spacing={0}>
+          <Box p={{ base: 6, md: 10 }}>
+            <Heading as="h1" size="lg" mb={2} textAlign="center">
+              Welcome Back
+            </Heading>
+            <Text fontSize="sm" color="gray.600" textAlign="center" mb={6}>
+              Sign in to continue to your dashboard
+            </Text>
 
-        <form onSubmit={handleSubmit(submit)}>
-          <Stack gap={4}>
-            <FormControl isInvalid={!!errors.email}>
-              <FormLabel>Email</FormLabel>
-              <Input placeholder="you@example.com" {...register("email")} />
-              <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
-            </FormControl>
+            <form onSubmit={handleSubmit(submit)}>
+              <Stack spacing={4}>
+                <FormControl isInvalid={!!errors.email}>
+                  <FormLabel>Email</FormLabel>
+                  <Input
+                    placeholder="you@example.com"
+                    {...register("email")}
+                    size="lg"
+                    borderRadius="md"
+                  />
+                  <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+                </FormControl>
 
-            <FormControl isInvalid={!!errors.password}>
-              <FormLabel>Password</FormLabel>
-              <Input type="password" placeholder="Password" {...register("password")} />
-              <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
-            </FormControl>
+                <FormControl isInvalid={!!errors.password}>
+                  <FormLabel>Password</FormLabel>
+                  <Input
+                    type="password"
+                    placeholder="Enter your password"
+                    {...register("password")}
+                    size="lg"
+                    borderRadius="md"
+                  />
+                  <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
+                </FormControl>
 
-            <Button type="submit" colorScheme="brand" loading={isSubmitting}>
-              Sign In
-            </Button>
-          </Stack>
-        </form>
+                <Button
+                  type="submit"
+                  colorScheme="brand"
+                  isLoading={isSubmitting}
+                  size="lg"
+                  width="100%"
+                  borderRadius="md"
+                >
+                  Login
+                </Button>
+              </Stack>
+            </form>
 
-        <Stack gap={2} textAlign="center">
-          <Link href="/auth/forgot/options" color="brand.500" fontSize="sm">
-            Forgot Password?
-          </Link>
+            <HStack mt={4} justify="space-between">
+              <Link href="/auth/forgot/options" color="brand.500" fontSize="sm">
+                Forgot Password?
+              </Link>
+              <Text fontSize="sm">
+                New user? {" "}
+                <Link href="/auth/signup" color="brand.500">
+                  Create an account
+                </Link>
+              </Text>
+            </HStack>
+          </Box>
 
-          <Text fontSize="sm">
-            New user?{" "}
-            <Link href="/auth/signup" color="brand.500">
-              Create an account
-            </Link>
-          </Text>
+          <Divider />
+
+          <Box p={4} bg="gray.50" textAlign="center">
+            <Text fontSize="xs" color="gray.500">
+              Design reference: <code>{designPdf}</code>
+            </Text>
+          </Box>
         </Stack>
-
-        <Text fontSize="xs" color="gray.500" textAlign="center">
-          Design reference: <code>{designPdf}</code>
-        </Text>
-      </Stack>
+      </Box>
     </Box>
   );
 }
