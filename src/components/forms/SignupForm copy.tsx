@@ -143,9 +143,10 @@ export default function SignupForm({ onSuccess }: { onSuccess?: (payload: any) =
             </Grid>
 
             <FormControl isInvalid={!!errors.acceptTnC}>
-              <Checkbox {...register("acceptTnC")}>
-                I agree to the <Link href={designPdf} isExternal color="brand.500">Terms & Conditions</Link>
-              </Checkbox>
+              <Box>
+                <input type="checkbox" id="tnc" {...register("acceptTnC")} />
+                <label htmlFor="tnc"><span>I agree to the <Link href={designPdf} target="_blank" rel="noopener noreferrer" color="brand.500">Terms & Conditions</Link></span></label>
+              </Box>
               <FormErrorMessage>{(errors.acceptTnC as any)?.message}</FormErrorMessage>
             </FormControl>
 
@@ -154,7 +155,7 @@ export default function SignupForm({ onSuccess }: { onSuccess?: (payload: any) =
                 Cancel
               </Button>
 
-              <Button colorScheme="brand" type="submit" isLoading={isSubmitting}>
+              <Button colorScheme="brand" type="submit" loading={isSubmitting}>
                 Create Account
               </Button>
             </Stack>

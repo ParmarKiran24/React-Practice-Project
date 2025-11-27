@@ -5,17 +5,14 @@ import {
   Grid,
   Flex,
   Input,
-  Select,
   Text,
   Button,
   Stack,
-  IconButton,
 } from "@chakra-ui/react";
 import { FormControl, FormLabel, FormErrorMessage } from "@chakra-ui/form-control";
 import { useForm, useFieldArray } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AddIcon, SmallCloseIcon } from "@chakra-ui/icons";
 
 // -----------------------------
 // Zod schema (qualification rows)
@@ -94,21 +91,8 @@ export default function QualificationDetails({
           <Text fontSize="lg" fontWeight={600}>
             Qualification Details
           </Text>
-          <Button
-            leftIcon={<AddIcon />}
-            size="sm"
-            onClick={() =>
-              append({
-                qualificationType: "",
-                qualificationName: "",
-                boardUniversity: "",
-                resultType: "",
-                percentage: "",
-                passingMonthYear: "",
-              })
-            }
-          >
-            Add New Qualification
+          <Button size="sm" onClick={() => append({ qualificationType: "", qualificationName: "", boardUniversity: "", resultType: "", percentage: "", passingMonthYear: "" })}>
+            + Add New Qualification
           </Button>
         </Flex>
 
@@ -145,20 +129,15 @@ export default function QualificationDetails({
               isInvalid={!!errors?.qualifications?.[idx]?.qualificationType}
             >
               <FormLabel srOnly>Qualification Type</FormLabel>
-              <Select
-                placeholder="Select"
-                {...register(
-                  `qualifications.${idx}.qualificationType` as const
-                )}
-                size="sm"
-              >
+              <select {...register(`qualifications.${idx}.qualificationType` as const)} style={{ width: "100%", padding: 6, borderRadius: 6, border: "1px solid #E2E8F0" }}>
+                <option value="">Select</option>
                 <option value="10th">10th Standard</option>
                 <option value="12th">12th Standard</option>
                 <option value="diploma">Diploma</option>
                 <option value="ug">Undergraduate</option>
                 <option value="pg">Postgraduate</option>
                 <option value="other">Other</option>
-              </Select>
+              </select>
               <FormErrorMessage>
                 {
                   errors?.qualifications?.[idx]?.qualificationType
@@ -207,16 +186,13 @@ export default function QualificationDetails({
               isInvalid={!!errors?.qualifications?.[idx]?.resultType}
             >
               <FormLabel srOnly>Result Type</FormLabel>
-              <Select
-                size="sm"
-                placeholder="Result"
-                {...register(`qualifications.${idx}.resultType` as const)}
-              >
+              <select {...register(`qualifications.${idx}.resultType` as const)} style={{ width: "100%", padding: 6, borderRadius: 6, border: "1px solid #E2E8F0" }}>
+                <option value="">Result</option>
                 <option value="passed">Passed</option>
                 <option value="appearing">Appearing</option>
                 <option value="failed">Failed</option>
                 <option value="other">Other</option>
-              </Select>
+              </select>
               <FormErrorMessage>
                 {errors?.qualifications?.[idx]?.resultType?.message as any}
               </FormErrorMessage>
@@ -258,15 +234,15 @@ export default function QualificationDetails({
               </FormControl>
 
               {/* Delete Row button */}
-              <IconButton
-                aria-label="Delete row"
-                icon={<SmallCloseIcon />}
-                size="sm"
+              <Button
                 variant="ghost"
+                colorScheme="red"
+                size="sm"
                 onClick={() => remove(idx)}
-                ml={2}
-                title="Delete qualification"
-              />
+                aria-label="Delete qualification"
+              >
+                ✕
+              </Button>
             </Flex>
           </Grid>
         ))}

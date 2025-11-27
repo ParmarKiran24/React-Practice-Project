@@ -3,11 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Stack, Input, Button, Text, HStack } from "@chakra-ui/react";
 import { PinInput, PinInputField } from "@chakra-ui/pin-input";
 import { useToast } from "@chakra-ui/toast";
-import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-} from "@chakra-ui/form-control";
+import { FormControl, FormLabel, FormErrorMessage } from "@chakra-ui/form-control";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
@@ -15,8 +11,12 @@ type FormVals = { email: string; otp: string };
 
 export default function ForgotEmailOtp({
   defaultEmail,
+  onSend,
+  onVerified,
 }: {
   defaultEmail?: string;
+  onSend?: (email: string) => void;
+  onVerified?: (data: any) => void;
 }) {
   const router = useRouter();
   const toast = useToast();
@@ -67,6 +67,8 @@ export default function ForgotEmailOtp({
       setRequestId(json.requestId);
       setTimer(60);
       setSent(true);
+      // invoke optional callback
+      try { onSend?.(e); } catch (err) { /* ignore callback errors */ }
       toast({
         title: "OTP sent",
         description: `A code was sent to ${e}`,
@@ -112,6 +114,7 @@ export default function ForgotEmailOtp({
       }
       // json.resetToken and json.email
       toast({ title: "OTP verified", status: "success" });
+      try { onVerified?.(json); } catch (err) { /* ignore callback errors */ }
       // navigate to reset page passing resetToken securely as state — but to keep it simple we pass in query
       router.push(
         `/auth/forgot/reset?token=${encodeURIComponent(json.resetToken)}`

@@ -5,14 +5,10 @@ import {
   Grid,
   Stack,
   Text,
-  Select,
   Input,
   Button,
-  Divider,
   Image,
   HStack,
-  Radio,
-  RadioGroup,
   VStack,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/toast";
@@ -202,7 +198,7 @@ export default function Payment({
           </Grid>
         </Box>
 
-        <Divider />
+        <Box as="hr" my={4} borderTop="1px solid" borderColor="gray.200" />
 
         {/* Payment method */}
         <Box bg="white" p={4} borderRadius="md" border="1px solid" borderColor="gray.100">
@@ -213,22 +209,24 @@ export default function Payment({
           <Stack gap={4}>
             <FormControl>
               <FormLabel>Method</FormLabel>
-              <RadioGroup defaultValue="upi">
-                <HStack gap={6}>
-                  <Radio value="upi" {...register("method", { value: "upi" })}>
-                    UPI
-                  </Radio>
-                  <Radio value="card" {...register("method", { value: "card" })}>
-                    Card
-                  </Radio>
-                  <Radio value="netbanking" {...register("method", { value: "netbanking" })}>
-                    Netbanking
-                  </Radio>
-                  <Radio value="offline" {...register("method", { value: "offline" })}>
-                    Offline / Bank Transfer
-                  </Radio>
-                </HStack>
-              </RadioGroup>
+              <HStack gap={6}>
+                <Box>
+                  <input type="radio" id="upi" value="upi" {...register("method")} />
+                  <label htmlFor="upi">UPI</label>
+                </Box>
+                <Box>
+                  <input type="radio" id="card" value="card" {...register("method")} />
+                  <label htmlFor="card">Card</label>
+                </Box>
+                <Box>
+                  <input type="radio" id="netbanking" value="netbanking" {...register("method")} />
+                  <label htmlFor="netbanking">Netbanking</label>
+                </Box>
+                <Box>
+                  <input type="radio" id="offline" value="offline" {...register("method")} />
+                  <label htmlFor="offline">Offline / Bank Transfer</label>
+                </Box>
+              </HStack>
             </FormControl>
 
             {/* UPI */}
@@ -244,7 +242,7 @@ export default function Payment({
                   <Button
                     onClick={handleSubmit(onSubmit)}
                     colorScheme="brand"
-                    isLoading={isSubmitting}
+                    loading={isSubmitting}
                   >
                     Generate UPI QR
                   </Button>
@@ -276,7 +274,7 @@ export default function Payment({
                     </Text>
 
                     <HStack mt={3} gap={3} justify="center">
-                      <Button onClick={verifyUpiPayment} isLoading={verificationState === "verifying"}>
+                      <Button onClick={verifyUpiPayment} loading={verificationState === "verifying"}>
                         Verify Payment
                       </Button>
                       <Button variant="outline" onClick={() => {
@@ -344,12 +342,13 @@ export default function Payment({
               <Box>
                 <FormControl isInvalid={!!errors.bank}>
                   <FormLabel>Select Bank</FormLabel>
-                  <Select placeholder="Select bank" {...register("bank")}>
+                  <select {...register("bank")}>
+                    <option value="">Select bank</option>
                     <option value="SBI">State Bank of India</option>
                     <option value="HDFC">HDFC Bank</option>
                     <option value="ICICI">ICICI Bank</option>
                     <option value="AXIS">Axis Bank</option>
-                  </Select>
+                  </select>
                   <FormErrorMessage>{(errors.bank as any)?.message}</FormErrorMessage>
                 </FormControl>
 

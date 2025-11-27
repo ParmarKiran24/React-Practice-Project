@@ -1,5 +1,7 @@
 "use client";
 import React from "react";
+import { useRouter } from "next/navigation";
+import { useToast } from "@chakra-ui/toast";
 import {
   Box,
   Stack,
@@ -39,6 +41,9 @@ const SignupSchema = z
 type SignupForm = z.infer<typeof SignupSchema>;
 
 export default function SignupForm({ onSuccess }: { onSuccess?: (payload: any) => void }) {
+  const router = useRouter();
+  const toast = useToast();
+
   const {
     register,
     handleSubmit,
@@ -57,10 +62,41 @@ export default function SignupForm({ onSuccess }: { onSuccess?: (payload: any) =
   });
 
   const submit = async (data: SignupForm) => {
-    // replace with your auth API call (NextAuth or custom)
-    // Example: await fetch('/api/auth/signup', { method: 'POST', body: JSON.stringify(data) })
-    console.log("Signup payload:", { ...data, password: "***" });
-    onSuccess?.(data);
+    try {
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const json = await res.json();
+      
+      if (!json?.success) {
+        toast({
+          title: "Signup failed",
+          description: json?.error ?? "Unable to create account",
+          status: "error",
+        });
+        return;
+      }
+
+      toast({
+        title: "Account created successfully!",
+        description: "Please check your email to verify your account.",
+        status: "success",
+      });
+
+      // Redirect to verify email page
+      router.push("/auth/verify-email");
+      
+      onSuccess?.(data);
+    } catch (err: any) {
+      toast({
+        title: "Network error",
+        description: String(err?.message ?? err),
+        status: "error",
+      });
+    }
   };
 
   // Local PDF path for design reference (will be turned into a URL by your infra)
@@ -125,18 +161,19 @@ export default function SignupForm({ onSuccess }: { onSuccess?: (payload: any) =
             </Grid>
 
             <FormControl isInvalid={!!errors.acceptTnC}>
-              <Checkbox {...register("acceptTnC")}>
-                I agree to the <Link href={designPdf} isExternal color="brand.500">Terms & Conditions</Link>
-              </Checkbox>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <input type="checkbox" {...register("acceptTnC")} />
+                I agree to the <Link href={designPdf} target="_blank" rel="noopener noreferrer" color="brand.500">Terms & Conditions</Link>
+              </label>
               <FormErrorMessage>{(errors.acceptTnC as any)?.message}</FormErrorMessage>
             </FormControl>
 
             <Stack direction="row" justify="space-between" align="center" mt={2}>
-              <Button variant="ghost" onClick={() => (window.location.href = "/")}>
+              <Button variant="ghost" onClick={() => router.push("/")}>
                 Cancel
               </Button>
 
-              <Button colorScheme="brand" type="submit" isLoading={isSubmitting}>
+              <Button colorScheme="brand" type="submit" loading={isSubmitting}>
                 Create Account
               </Button>
             </Stack>

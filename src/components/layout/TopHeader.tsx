@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Flex, Text, Avatar, Spacer } from "@chakra-ui/react";
+import { Flex, Text, Box, Spacer } from "@chakra-ui/react";
 
 export default function TopHeader() {
   return (
@@ -17,7 +17,19 @@ export default function TopHeader() {
 
       <Spacer />
 
-      <Avatar name="Student" size="sm" />
+      <Box
+        as="div"
+        w="36px"
+        h="36px"
+        borderRadius="full"
+        bg="gray.100"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        fontWeight={600}
+      >
+        S
+      </Box>
     </Flex>
   );
 }

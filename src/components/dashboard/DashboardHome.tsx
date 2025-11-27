@@ -1,13 +1,57 @@
 "use client";
 import React from "react";
-import { Box, Grid, Text, Flex, Center } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
+import { Box, Grid, Text, Flex, Center, Button, Stack } from "@chakra-ui/react";
 
 export default function DashboardHome() {
+  const router = useRouter();
+
+  const handleStartApplication = () => {
+    router.push("/profile/personal");
+  };
+
+  const handleViewStatus = () => {
+    router.push("/profile/status");
+  };
+
+  const handleViewProgrammes = () => {
+    router.push("/programmes");
+  };
+
   return (
     <Box>
       <Text fontSize="2xl" fontWeight="700" mb={6}>
         Welcome Back 👋
       </Text>
+
+      {/* Quick Actions */}
+      <Stack direction={{ base: "column", md: "row" }} gap={4} mb={8}>
+        <Button
+          colorScheme="brand"
+          size="lg"
+          onClick={handleStartApplication}
+          flex={1}
+        >
+          Start New Application
+        </Button>
+        <Button
+          variant="outline"
+          colorScheme="brand"
+          size="lg"
+          onClick={handleViewStatus}
+          flex={1}
+        >
+          View Application Status
+        </Button>
+        <Button
+          variant="ghost"
+          size="lg"
+          onClick={handleViewProgrammes}
+          flex={1}
+        >
+          Browse Programmes
+        </Button>
+      </Stack>
 
       {/* Widgets Row */}
       <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }} gap={6}>

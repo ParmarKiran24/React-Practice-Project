@@ -3,16 +3,15 @@ import React, { useEffect } from "react";
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
   Grid,
   Input,
   Select,
   Textarea,
   Stack,
+  Checkbox,
 } from "@chakra-ui/react";
 import { FormControl, FormLabel, FormErrorMessage } from "@chakra-ui/form-control";
-
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -181,7 +180,15 @@ export default function AddressDetails({
             control={control}
             name="sameAsCurrent"
             render={({ field }) => (
-              <Checkbox {...field}>Permanent Address same as Current</Checkbox>
+              <Flex align="center" gap={2}>
+                <input
+                  type="checkbox"
+                  id="sameAddr"
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e.target.checked)}
+                />
+                <label htmlFor="sameAddr">Permanent Address same as Current</label>
+              </Flex>
             )}
           />
 

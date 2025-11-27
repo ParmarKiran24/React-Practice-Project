@@ -15,7 +15,7 @@ const ResetSchema = z.object({
 
 type ResetForm = z.infer<typeof ResetSchema>;
 
-export default function ForgotResetPassword() {
+export default function ForgotResetPassword({ onReset }: { onReset?: () => void } = {}) {
   const search = useSearchParams();
   const router = useRouter();
   const toast = useToast();
@@ -40,6 +40,7 @@ export default function ForgotResetPassword() {
         return;
       }
       toast({ title: "Password reset successful", status: "success" });
+      try { onReset?.(); } catch (e) { /* ignore callback errors */ }
       router.push("/auth/signin");
     } catch (err: any) {
       toast({ title: "Network error", description: String(err?.message ?? err), status: "error" });
@@ -65,7 +66,7 @@ export default function ForgotResetPassword() {
               <FormErrorMessage>{(errors.confirmPassword as any)?.message}</FormErrorMessage>
             </FormControl>
 
-            <Button type="submit" colorScheme="brand" isLoading={isSubmitting}>Reset Password</Button>
+            <Button type="submit" colorScheme="brand" loading={isSubmitting}>Reset Password</Button>
           </Stack>
         </form>
 

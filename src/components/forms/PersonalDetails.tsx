@@ -86,11 +86,12 @@ export default function PersonalDetails({
         <Grid templateColumns={{ base: "1fr", md: "repeat(3,1fr)" }} gap={4}>
           <FormControl isInvalid={!!errors.gender}>
             <FormLabel>Gender *</FormLabel>
-            <Select placeholder="Select Gender" {...register("gender")}>
+            <select {...register("gender")}>
+              <option value="">Select Gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
               <option value="Other">Other</option>
-            </Select>
+            </select>
             <FormErrorMessage>{errors.gender?.message}</FormErrorMessage>
           </FormControl>
 
@@ -102,7 +103,8 @@ export default function PersonalDetails({
 
           <FormControl>
             <FormLabel>Blood Group</FormLabel>
-            <Select placeholder="Select Blood Group" {...register("bloodGroup")}>
+            <select {...register("bloodGroup")}>
+              <option value="">Select Blood Group</option>
               <option>O+</option>
               <option>O-</option>
               <option>A+</option>
@@ -111,7 +113,7 @@ export default function PersonalDetails({
               <option>B-</option>
               <option>AB+</option>
               <option>AB-</option>
-            </Select>
+            </select>
           </FormControl>
         </Grid>
 

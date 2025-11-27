@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import mockData from "@/data/mockData.json";
 
 const LoginSchema = z.object({
   email: z.string().email("Enter a valid email"),
@@ -33,13 +34,31 @@ export default function LoginForm() {
   } = useForm<LoginFormType>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "kp007@gmail.com",
+      password: "test123",
     },
   });
 
   const submit = async (data: LoginFormType) => {
     try {
+      // Demo credentials bypass - check against mockData.json
+      const user = mockData.users.find(
+        (u) => u.email === data.email && u.password === data.password
+      );
+      
+      if (user) {
+        // Store user data in localStorage for profile pages
+        localStorage.setItem("mockUser", JSON.stringify(user));
+        
+        toast({ 
+          title: "Login successful", 
+          description: "Welcome back!",
+          status: "success" 
+        });
+        router.push("/dashboard");
+        return;
+      }
+
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -98,7 +117,7 @@ export default function LoginForm() {
               <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
             </FormControl>
 
-            <Button type="submit" colorScheme="brand" isLoading={isSubmitting}>
+            <Button type="submit" colorScheme="brand" loading={isSubmitting}>
               Sign In
             </Button>
           </Stack>

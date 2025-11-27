@@ -1,8 +1,10 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Box, Flex, Heading, Text, Button } from '@chakra-ui/react'
 
 export default function Programmes() {
+  const router = useRouter();
   const tabs = ["Diploma Programmes", "UG Programmes", "PG Programmes", "PHD Programmes"];
   
   // use null for no active tab (so clicking same tab resets it)
@@ -14,6 +16,10 @@ export default function Programmes() {
     } else {
       setActive(index); // clicking new tab → activate
     }
+  };
+
+  const handleCourseClick = () => {
+    router.push("/programmes");
   };
 
   return (
@@ -52,17 +58,17 @@ export default function Programmes() {
             <Text fontWeight={600} mb={2}>Course Duration: <Text as="span" fontWeight={400}>2 Years</Text></Text>
             <Text fontWeight={600} mb={2}>Eligibility Criteria:</Text>
             <Box as="ul" pl={4} mb={4}><Box as="li">10th pass (or equivalent)</Box><Box as="li">Minimum aggregate marks (e.g., 50%)</Box></Box>
-            <Button bg="transparent" border="2px solid var(--brand-500)" color="var(--brand-500)" w="100%" borderRadius="30px" py={3} _hover={{ bg: 'var(--brand-500)', color: 'white' }}>View Course Information</Button>
+            <Button onClick={handleCourseClick} bg="transparent" border="2px solid var(--brand-500)" color="var(--brand-500)" w="100%" borderRadius="30px" py={3} _hover={{ bg: 'var(--brand-500)', color: 'white' }}>View Course Information</Button>
           </Box>
 
           <Box w={{ base: '100%', md: '310px' }} p={6} borderRadius="15px" boxShadow="md" bg="white">
             <Heading as="h3" size="md" mb={3}>Diploma in Agriculture Course</Heading>
             <Text fontWeight={600} mb={2}>Course Overview:</Text>
-            <Text mb={3}>The “Polytechnic in Agriculture” is a diploma-level programme aimed at training students in crop science, horticulture, soil science, etc.</Text>
+            <Text mb={3}>The "Polytechnic in Agriculture" is a diploma-level programme aimed at training students in crop science, horticulture, soil science, etc.</Text>
             <Text fontWeight={600} mb={2}>Course Duration: <Text as="span" fontWeight={400}>3 Years</Text></Text>
             <Text fontWeight={600} mb={2}>Eligibility Criteria:</Text>
             <Box as="ul" pl={4} mb={4}><Box as="li">10th standard (SSC) or equivalent</Box><Box as="li">Minimum aggregate marks (e.g., 50%)</Box></Box>
-            <Button bg="transparent" border="2px solid var(--brand-500)" color="var(--brand-500)" w="100%" borderRadius="30px" py={3} _hover={{ bg: 'var(--brand-500)', color: 'white' }}>View Course Information</Button>
+            <Button onClick={handleCourseClick} bg="transparent" border="2px solid var(--brand-500)" color="var(--brand-500)" w="100%" borderRadius="30px" py={3} _hover={{ bg: 'var(--brand-500)', color: 'white' }}>View Course Information</Button>
           </Box>
 
           <Box w={{ base: '100%', md: '310px' }} p={6} borderRadius="15px" boxShadow="md" bg="white">
@@ -72,7 +78,7 @@ export default function Programmes() {
             <Text fontWeight={600} mb={2}>Course Duration: <Text as="span" fontWeight={400}>1 Year</Text></Text>
             <Text fontWeight={600} mb={2}>Eligibility Criteria:</Text>
             <Box as="ul" pl={4} mb={4}><Box as="li">8th class pass</Box></Box>
-            <Button variant="outline" border="2px solid var(--brand-500)" color="var(--brand-500)" w="100%" borderRadius="30px" py={3} _hover={{ bg: 'var(--brand-500)', color: 'white' }}>View Course Information</Button>
+            <Button onClick={handleCourseClick} variant="outline" border="2px solid var(--brand-500)" color="var(--brand-500)" w="100%" borderRadius="30px" py={3} _hover={{ bg: 'var(--brand-500)', color: 'white' }}>View Course Information</Button>
           </Box>
         </Flex>
       </Flex>

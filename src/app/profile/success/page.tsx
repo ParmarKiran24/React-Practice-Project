@@ -1,19 +1,26 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import SuccessPage from "@/components/ui/SuccessPage";
 import { useRouter } from "next/navigation";
 
-/**
- * Success page route wrapper
- * - Replace applicationId fetch or props as needed
- * - The local PDF path(s) used inside the component (e.g. /mnt/data/Declartion.pdf)
- *   will be converted to a real URL by your infra.
- */
-
 export default function SuccessRoutePage() {
   const router = useRouter();
+  const [applicationId, setApplicationId] = useState("APPL-2025-0001");
+
+  useEffect(() => {
+    // Get submission details from localStorage
+    const storedUser = localStorage.getItem("mockUser");
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      if (user.profile?.submittedAt) {
+        // Generate application ID from submission timestamp
+        const timestamp = new Date(user.profile.submittedAt).getTime();
+        setApplicationId(`APPL-${timestamp.toString().slice(-8)}`);
+      }
+    }
+  }, []);
 
   const handleGoToDashboard = () => {
-    // replace with your route for dashboard
     router.push("/dashboard");
   };
 
@@ -21,11 +28,7 @@ export default function SuccessRoutePage() {
     router.push("/profile/summary");
   };
 
-  // If you generate a PDF on server after submission, pass its URL via downloadUrl prop.
-  // For now we point to the local declaration PDF (your infra will convert it).
   const downloadUrl = "/mnt/data/Declartion.pdf";
-
-  const applicationId = "APPL-2025-0001"; // replace with real id from server
 
   return (
     <SuccessPage

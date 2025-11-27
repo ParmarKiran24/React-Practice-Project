@@ -5,7 +5,6 @@ import {
   Grid,
   Stack,
   Input,
-  Select,
   Button,
   Text,
 } from "@chakra-ui/react";
@@ -105,14 +104,14 @@ export default function BankDetails({
         <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={4}>
           <FormControl isInvalid={!!errors.bankName}>
             <FormLabel>Select Bank *</FormLabel>
-            <Select placeholder="Select" {...register("bankName")}>
-              {/* replace with your actual bank list / API */}
+            <select {...register("bankName")} style={{ width: "100%", padding: 8, borderRadius: 6, border: "1px solid #E2E8F0" }}>
+              <option value="">Select</option>
               <option value="State Bank of India">State Bank of India</option>
               <option value="HDFC Bank">HDFC Bank</option>
               <option value="ICICI Bank">ICICI Bank</option>
               <option value="Axis Bank">Axis Bank</option>
               <option value="Other">Other</option>
-            </Select>
+            </select>
             <FormErrorMessage>{errors.bankName?.message}</FormErrorMessage>
           </FormControl>
 

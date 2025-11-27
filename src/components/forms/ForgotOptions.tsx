@@ -13,6 +13,21 @@ export default function ForgotOptions({
   const router = useRouter();
   const designPdf = "/mnt/data/Forget Password_ Select Options.pdf";
 
+  const handleSelect = (method: "email-otp" | "email-link" | "security") => {
+    if (onSelect) {
+      onSelect(method);
+    } else {
+      // Default navigation
+      if (method === "email-otp") {
+        router.push("/auth/forgot/email-otp");
+      } else if (method === "email-link") {
+        router.push("/auth/forgot/email-based");
+      } else {
+        router.push("/auth/forgot/security-question");
+      }
+    }
+  };
+
   return (
     <Box maxW="700px" mx="auto" p={6} bg="white" borderRadius="md" boxShadow="sm">
       <Stack gap={6}>
@@ -22,10 +37,14 @@ export default function ForgotOptions({
         </Text>
 
         <VStack gap={3} align="stretch">
-          <Button onClick={() => onSelect?.("email-otp")}>Reset via Email OTP</Button>
-          <Button onClick={() => onSelect?.("email-link")}>Send Reset Link to Email</Button>
-          <Button onClick={() => onSelect?.("security")}>Answer Security Questions</Button>
+          <Button onClick={() => handleSelect("email-otp")}>Reset via Email OTP</Button>
+          <Button onClick={() => handleSelect("email-link")}>Send Reset Link to Email</Button>
+          <Button onClick={() => handleSelect("security")}>Answer Security Questions</Button>
         </VStack>
+
+        <Button variant="ghost" onClick={() => router.push("/auth/signin")}>
+          Back to Login
+        </Button>
 
         <Text fontSize="xs" color="gray.500">
           Design reference: <code>{designPdf}</code>

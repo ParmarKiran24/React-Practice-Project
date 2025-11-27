@@ -1,8 +1,19 @@
 "use client";
 import React from "react";
+import { useRouter } from "next/navigation";
 import { Box, VStack, Text, Link } from "@chakra-ui/react";
 
 export default function Sidebar() {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    // Clear user data from localStorage
+    localStorage.removeItem("mockUser");
+    
+    // Redirect to main/landing page (replace history to prevent back button)
+    router.replace("/");
+  };
+
   return (
     <Box
       w="250px"
@@ -27,7 +38,13 @@ export default function Sidebar() {
         <Link href="/profile/documents">Upload Documents</Link>
         <Link href="/profile/payment">Payment</Link>
         <Link href="/profile/status">Application Status</Link>
-        <Link href="/logout" color="red.500">
+        <Link 
+          as="button" 
+          onClick={handleLogout} 
+          color="red.500"
+          textAlign="left"
+          _hover={{ textDecoration: "underline" }}
+        >
           Logout
         </Link>
       </VStack>

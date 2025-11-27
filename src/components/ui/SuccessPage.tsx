@@ -8,11 +8,9 @@ import {
   Heading,
   Button,
   HStack,
-  Icon,
   Link,
   Image,
 } from "@chakra-ui/react";
-import { CheckCircleIcon, DownloadIcon } from "@chakra-ui/icons";
 
 /**
  * SuccessPage component
@@ -47,7 +45,7 @@ export default function SuccessPage({
     <Box maxW="900px" mx="auto" p={6}>
       <VStack gap={6} align="stretch" bg="white" p={8} borderRadius="md" boxShadow="sm">
         <HStack gap={4}>
-          <Icon as={CheckCircleIcon} boxSize={10} color="green.500" />
+          <Box fontSize="40px" color="green.500">✓</Box>
           <Heading size="lg">Application Submitted Successfully</Heading>
         </HStack>
 
@@ -71,12 +69,12 @@ export default function SuccessPage({
           </Button>
 
           <Button
-            leftIcon={<DownloadIcon />}
             onClick={() => {
               // open download URL in new tab — the local path will be converted by your infra
               window.open(finalDownloadUrl, "_blank");
             }}
           >
+            <Box as="span" mr={2}>⬇</Box>
             Download Application (PDF)
           </Button>
         </HStack>
@@ -87,11 +85,11 @@ export default function SuccessPage({
           </Text>
 
           <HStack gap={4}>
-            <Link href={declarationPdfLocal} isExternal color="brand.500">
+            <Link href={declarationPdfLocal} target="_blank" rel="noopener noreferrer" color="brand.500">
               Declaration PDF
             </Link>
 
-            <Link href={profileDesignPdfLocal} isExternal color="brand.500">
+            <Link href={profileDesignPdfLocal} target="_blank" rel="noopener noreferrer" color="brand.500">
               Profile Summary (design)
             </Link>
           </HStack>

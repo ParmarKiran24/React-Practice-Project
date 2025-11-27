@@ -2,22 +2,15 @@
 import React, { useState } from "react";
 import {
   Box,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
   Grid,
   Stack,
   Input,
   Button,
   Text,
   HStack,
-  IconButton,
   Image,
 } from "@chakra-ui/react";
 import { FormControl, FormLabel, FormErrorMessage } from "@chakra-ui/form-control";
-import { AddIcon, SmallCloseIcon } from "@chakra-ui/icons";
 import { useForm, Controller } from "react-hook-form";
 
 /**
@@ -151,23 +144,19 @@ export default function DocumentDetails({
           Document Uploads
         </Text>
 
-        <Accordion allowMultiple defaultIndex={[0]}>
+        <Stack gap={3}>
           {rows.map((row, idx) => (
-            <AccordionItem key={row.id} border="1px solid" borderColor="gray.100" borderRadius="md" mb={3}>
-              <h3>
-                <AccordionButton>
-                  <Box flex="1" textAlign="left">
-                    {row.name} {row.required ? <Text as="span" color="red.500"> *</Text> : null}
-                    {row.file ? (
-                      <Text fontSize="sm" color="green.600" ml={2} as="span">
-                        ({row.file.name})
-                      </Text>
-                    ) : null}
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h3>
-              <AccordionPanel pb={4}>
+            <Box key={row.id} border="1px solid" borderColor="gray.100" borderRadius="md" p={3}>
+              <Box mb={2}>
+                <Text fontWeight={600}>
+                  {row.name} {row.required ? <Text as="span" color="red.500"> *</Text> : null}
+                  {row.file ? (
+                    <Text fontSize="sm" color="green.600" ml={2} as="span">
+                      ({row.file.name})
+                    </Text>
+                  ) : null}
+                </Text>
+              </Box>
                 <Grid templateColumns={{ base: "1fr", md: "1fr 220px" }} gap={4} alignItems="center">
                   <FormControl isInvalid={!!row.error}>
                     <FormLabel>Upload {row.name}</FormLabel>
@@ -202,14 +191,15 @@ export default function DocumentDetails({
                               >
                                 Preview
                               </Button>
-                              <IconButton
-                                aria-label="Remove file"
-                                icon={<SmallCloseIcon />}
-                                size="sm"
+                              <Button
                                 variant="ghost"
+                                colorScheme="red"
+                                size="sm"
                                 onClick={() => removeFile(idx)}
-                                title="Remove file"
-                              />
+                                aria-label="Remove file"
+                              >
+                                ✕
+                              </Button>
                             </HStack>
                           </Box>
                         ) : (
@@ -232,14 +222,15 @@ export default function DocumentDetails({
                               >
                                 Open
                               </Button>
-                              <IconButton
-                                aria-label="Remove file"
-                                icon={<SmallCloseIcon />}
-                                size="sm"
+                              <Button
                                 variant="ghost"
+                                colorScheme="red"
+                                size="sm"
                                 onClick={() => removeFile(idx)}
-                                title="Remove file"
-                              />
+                                aria-label="Remove file"
+                              >
+                                ✕
+                              </Button>
                             </HStack>
                           </Box>
                         )}
@@ -251,13 +242,12 @@ export default function DocumentDetails({
                     )}
                   </Box>
                 </Grid>
-              </AccordionPanel>
-            </AccordionItem>
+            </Box>
           ))}
-        </Accordion>
+        </Stack>
 
         <HStack gap={3}>
-          <Button leftIcon={<AddIcon />} size="sm" onClick={addCustomDoc}>
+          <Button size="sm" onClick={addCustomDoc}>
             Add Another Document
           </Button>
           <Text fontSize="sm" color="gray.600">
@@ -273,7 +263,7 @@ export default function DocumentDetails({
         </Grid>
 
         <Box fontSize="sm" color="gray.600">
-          Design reference (local path, will be transformed to URL by your tool): <code>{designPdfUrl}</code>. :contentReference[oaicite:2]{index=2}
+          Design reference (local path, will be transformed to URL by your tool): <code>{designPdfUrl}</code>
         </Box>
       </Stack>
     </Box>

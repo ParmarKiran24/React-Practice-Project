@@ -1,8 +1,16 @@
+"use client";
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { Box, Grid, Heading, Text, Button, Flex, Link as ChakraLink } from '@chakra-ui/react'
 import NextLink from 'next/link'
 
 export default function NewsEvents(){
+  const router = useRouter();
+
+  const handleViewMore = () => {
+    router.push("/news");
+  };
+
   const makeColumn = (title: string) => (
     <Box>
       <Heading as="h4" size="md" mb={6}>{title}</Heading>
@@ -75,6 +83,7 @@ export default function NewsEvents(){
 
       <Box>
         <Button
+          onClick={handleViewMore}
           variant="ghost"
           mt={4}
           px={6}

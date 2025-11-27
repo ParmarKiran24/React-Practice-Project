@@ -8,10 +8,8 @@ import {
   Checkbox,
   Input,
   Link,
-  Divider,
 } from "@chakra-ui/react";
 import { FormControl, FormLabel, FormErrorMessage } from "@chakra-ui/form-control";
-
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,7 +27,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 // zod schema
 const DeclarationSchema = z.object({
-  accepted: z.literal(true, { errorMap: () => ({ message: "You must accept the declaration to continue." }) }),
+  accepted: z.boolean().refine((val) => val === true, { message: "You must accept the declaration to continue." }),
   signatureName: z.string().min(2, "Please enter your full name as signature"),
 });
 
@@ -88,11 +86,11 @@ I accept all the terms and conditions as mentioned in the prospectus and agree t
             {declarationText}
           </Text>
 
-          <Divider my={4} />
+          <Box as="hr" my={4} borderTop="1px solid" borderColor="gray.200" />
 
           <Text fontSize="sm" color="gray.600">
             Full declaration (PDF):{" "}
-            <Link href={designPdfUrl} isExternal color="brand.500">
+            <Link href={designPdfUrl} target="_blank" rel="noopener noreferrer" color="brand.500">
               Open Declaration PDF
             </Link>
           </Text>
@@ -104,14 +102,15 @@ I accept all the terms and conditions as mentioned in the prospectus and agree t
           <FormErrorMessage>{errors.signatureName?.message}</FormErrorMessage>
         </FormControl>
 
-        <FormControl isInvalid={!!errors.accepted}>
-          <Checkbox {...register("accepted")}>I accept the declaration and the terms stated above *</Checkbox>
-          <FormErrorMessage>{(errors.accepted as any)?.message}</FormErrorMessage>
-        </FormControl>
+        <Box>
+          <input type="checkbox" id="accept" {...register("accepted")} />
+          <label htmlFor="accept"><Text as="span" ml={2}>I accept the declaration and the terms stated above *</Text></label>
+          {errors.accepted && <Text color="red.500" fontSize="sm" mt={2}>{(errors.accepted as any)?.message}</Text>}
+        </Box>
 
         <Stack direction="row" justify="space-between">
           <Button variant="ghost">Previous</Button>
-          <Button colorScheme="brand" type="submit" isLoading={isSubmitting}>
+          <Button colorScheme="brand" type="submit" loading={isSubmitting}>
             Final Submit
           </Button>
         </Stack>

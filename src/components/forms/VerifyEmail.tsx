@@ -114,7 +114,7 @@ export default function VerifyEmail({
               type="submit"
               colorScheme="brand"
               width="100%"
-              isLoading={isSubmitting}
+              loading={isSubmitting}
             >
               Verify Email
             </Button>

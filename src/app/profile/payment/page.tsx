@@ -1,3 +1,4 @@
+"use client";
 import Payment from "@/components/forms/Payment";
 import { useRouter } from "next/navigation";
 

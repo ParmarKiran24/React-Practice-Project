@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Box, Stack, Input, Button, Text } from "@chakra-ui/react";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
+import { FormControl, FormLabel, FormErrorMessage } from "@chakra-ui/form-control";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 

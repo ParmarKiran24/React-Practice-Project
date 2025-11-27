@@ -1,0 +1,180 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "kp007@gmail.com",
+      "password": "test123",
+      "isVerified": true,
+      "profile": {
+        "personal": {
+          "firstName": "Kiran",
+          "middleName": "Prakash",
+          "lastName": "Doe",
+          "gender": "Male",
+          "dob": "2000-01-01",
+          "bloodGroup": "O+",
+          "fatherName": "Father Name",
+          "motherName": "Mother Name",
+          "email": "kp007@gmail.com",
+          "mobile": "9876543210",
+          "whatsapp": "9876543210",
+          "aadhar": "1234 5678 9012"
+        },
+        "address": {
+          "current": {
+            "address1": "123 Main Street",
+            "address2": "Apartment 4B",
+            "village": "Sample City",
+            "district": "Sample District",
+            "state": "Sample State",
+            "country": "India",
+            "pincode": "400001"
+          },
+          "permanent": {
+            "address1": "456 Home Road",
+            "address2": "",
+            "village": "Home Town",
+            "district": "Home District",
+            "state": "Home State",
+            "country": "India",
+            "pincode": "400002"
+          }
+        },
+        "reservation": {
+          "category": "General",
+          "subCategory": "None",
+          "pwd": "No",
+          "exServiceman": "No"
+        },
+        "qualification": [
+          {
+            "qualificationType": "SSC",
+            "qualificationName": "10th Standard",
+            "boardUniversity": "State Board",
+            "resultType": "Passed",
+            "percentage": "85%",
+            "passingMonthYear": "March 2018"
+          },
+          {
+            "qualificationType": "HSC",
+            "qualificationName": "12th Standard",
+            "boardUniversity": "State Board",
+            "resultType": "Passed",
+            "percentage": "82%",
+            "passingMonthYear": "March 2020"
+          }
+        ],
+        "bank": {
+          "bankName": "Sample Bank",
+          "accountHolderName": "Kiran Prakash Doe",
+          "branchName": "Main Branch",
+          "ifsc": "SAMP0001234",
+          "accountNumber": "12345678901234"
+        },
+        "photo": "/src/assets/image 2.png",
+        "signature": "/src/assets/image 4.png",
+        "documents": [
+          {
+            "name": "SSC Certificate",
+            "type": "ssc_certificate",
+            "url": "/documents/sample-ssc-certificate.pdf"
+          },
+          {
+            "name": "HSC Certificate",
+            "type": "hsc_certificate",
+            "url": "/documents/sample-hsc-certificate.pdf"
+          },
+          {
+            "name": "Aadhar Card",
+            "type": "aadhar",
+            "url": "/documents/sample-aadhar.pdf"
+          },
+          {
+            "name": "Caste Certificate",
+            "type": "caste_certificate",
+            "url": "/documents/sample-caste-certificate.pdf"
+          }
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "email": "demo@example.com",
+      "password": "demo123",
+      "isVerified": true,
+      "profile": {
+        "personal": {
+          "firstName": "Demo",
+          "middleName": "",
+          "lastName": "User",
+          "gender": "Female",
+          "dob": "1999-05-15",
+          "bloodGroup": "A+",
+          "fatherName": "Demo Father",
+          "motherName": "Demo Mother",
+          "email": "demo@example.com",
+          "mobile": "9999999999",
+          "whatsapp": "9999999999",
+          "aadhar": "9876 5432 1098"
+        },
+        "address": {
+          "current": {
+            "address1": "789 Demo Street",
+            "address2": "Floor 2",
+            "village": "Demo City",
+            "district": "Demo District",
+            "state": "Demo State",
+            "country": "India",
+            "pincode": "500001"
+          },
+          "permanent": {
+            "address1": "789 Demo Street",
+            "address2": "Floor 2",
+            "village": "Demo City",
+            "district": "Demo District",
+            "state": "Demo State",
+            "country": "India",
+            "pincode": "500001"
+          }
+        },
+        "reservation": {
+          "category": "OBC",
+          "subCategory": "OBC-NCL",
+          "pwd": "No",
+          "exServiceman": "No"
+        },
+        "qualification": [
+          {
+            "qualificationType": "SSC",
+            "qualificationName": "10th Standard",
+            "boardUniversity": "CBSE",
+            "resultType": "Passed",
+            "percentage": "90%",
+            "passingMonthYear": "March 2017"
+          }
+        ],
+        "bank": {
+          "bankName": "Demo Bank",
+          "accountHolderName": "Demo User",
+          "branchName": "Demo Branch",
+          "ifsc": "DEMO0009999",
+          "accountNumber": "99999999999999"
+        },
+        "photo": "/src/assets/Frame 153.png",
+        "signature": "/src/assets/Frame 163.png",
+        "documents": [
+          {
+            "name": "SSC Marksheet",
+            "type": "ssc_certificate",
+            "url": "/documents/demo-ssc.pdf"
+          },
+          {
+            "name": "Income Certificate",
+            "type": "income_certificate",
+            "url": "/documents/demo-income.pdf"
+          }
+        ]
+      }
+    }
+  ]
+}

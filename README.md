@@ -141,22 +141,64 @@ Visit [http://localhost:3000](http://localhost:3000)
 src/
 ├── app/
 │   ├── api/
-│   │   ├── auth/[...nextauth]/    # Auth.js API route
-│   │   └── upload/                # S3 signed URL generation
+│   │   ├── auth/
+│   │   │   ├── forgot/
+│   │   │   │   ├── send-otp/route.ts
+│   │   │   │   ├── verify-otp/route.ts
+│   │   │   │   └── reset/route.ts
+│   │   │   ├── signup/route.ts
+│   │   │   ├── verify-email/route.ts
+│   │   │   └── login/route.ts
+│   │   ├── payments/
+│   │   │   ├── create/route.ts
+│   │   │   └── verify/route.ts
+│   │   └── upload/route.ts                # S3 signed-url endpoint (placeholder)
 │   ├── auth/
-│   │   └── signin/                # Sign-in page
-│   ├── layout.tsx                 # Root layout with ChakraProvider
-│   └── page.tsx                   # Home page
-├── db/
-│   └── schema.ts                  # Drizzle ORM schema definitions
-├── lib/
-│   ├── auth.ts                    # Auth.js configuration
-│   └── drizzle.ts                 # Drizzle database client
-├── providers/
-│   └── ChakraProviders.tsx        # Chakra UI provider wrapper
-└── globals.css                    # Global styles
+│   │   ├── signin/
+│   │   │   └── page.tsx                   # Login page
+│   │   ├── signup/
+│   │   │   └── page.tsx                   # Signup page
+│   │   ├── verify-email/
+│   │   │   └── page.tsx                   # Verify email page (auto-call / UI)
+│   │   └── forgot/
+│   │       ├── options/
+│   │       │   └── page.tsx
+│   │       ├── email-otp/
+│   │       │   └── page.tsx
+│   │       ├── email-based/
+│   │       │   └── page.tsx
+│   │       ├── security-question/
+│   │       │   └── page.tsx
+│   │       └── reset/
+│   │           └── page.tsx
+│   ├── dashboard/
+│   │   └── page.tsx                       # Dashboard route wrapper
+│   ├── profile/
+│   │   ├── photo/
+│   │   │   └── page.tsx
+│   │   ├── documents/
+│   │   │   └── page.tsx
+│   │   ├── declaration/
+│   │   │   └── page.tsx
+│   │   ├── summary/
+│   │   │   └── page.tsx
+│   │   ├── payment/
+│   │   │   └── page.tsx
+│   │   ├── success/
+│   │   │   └── page.tsx
+│   │   └── status/
+│   │       └── page.tsx
+│   ├── landing/
+│   │   └── page.tsx                       # Landing page (also src/app/page.tsx can redirect)
+│   ├── programmes/
+│   │   └── page.tsx
+│   ├── news/
+│   │   └── page.tsx
+│   ├── layout.tsx                         # Root layout (renders MainContainer with children)
+│   └── page.tsx                           # Home (imports Welcome + Programmes + NewsEvents)
+│
 ├── components/
-│   ├── ui/                            # Reusable UI components
+│   ├── ui/
 │   │   ├── ButtonPrimary.tsx
 │   │   ├── Card.tsx
 │   │   ├── InputField.tsx
@@ -165,15 +207,50 @@ src/
 │   ├── forms/
 │   │   ├── LoginForm.tsx
 │   │   ├── SignupForm.tsx
-│   │   └── ContactForm.tsx
-│   ├── layout/
-│   │   ├── Header.tsx
-│   │   ├── Footer.tsx
-│   │   ├── MainContainer.tsx
-│   │   ├── 
-│   │   ├── 
-│   │   ├── 
-│   │   └── 
+│   │   ├── VerifyEmail.tsx
+│   │   ├── ForgotOptions.tsx
+│   │   ├── ForgotEmailOtp.tsx
+│   │   ├── ForgotEmailBased.tsx
+│   │   ├── ForgotSecurityQuestion.tsx
+│   │   ├── ForgotResetPassword.tsx
+│   │   ├── PhotoSignature.tsx
+│   │   ├── DocumentDetails.tsx
+│   │   ├── Declaration.tsx
+│   │   ├── ProfileSummary.tsx
+│   │   ├── Payment.tsx
+│   │   └── SuccessPage.tsx
+│   ├── dashboard/
+│   │   ├── DashboardHome.tsx
+│   │   └── ApplicationStatus.tsx
+│   ├── landing/
+│   │   └── LandingHero.tsx
+│   └── layout/
+│       ├── Header.tsx
+│       ├── Footer.tsx
+│       └── MainContainer.tsx
+│
+├── lib/
+│   ├── auth.ts                            # next-auth (placeholder) or auth helpers
+│   ├── drizzle.ts                         # Drizzle DB client (placeholder)
+│   ├── mockAuthStore.ts                   # OTP + reset in-memory store
+│   └── mockUserStore.ts                   # in-memory users (signup/login mock)
+│
+├── providers/
+│   └── ChakraProviders.tsx
+|
+├── db/
+│   └── schema.ts                          # Drizzle schema (empty / scaffold)
+|
+├── styles/
+│   └── globals.css
+|
+├── public/
+│   └── hero-placeholder.png               # hero placeholder (or your image)
+|
+├── assets/
+│   └── image 4.png                        # header logo file you used
+|
+└── package.json
 
 ## Available Scripts
 

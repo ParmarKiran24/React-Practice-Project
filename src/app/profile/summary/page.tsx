@@ -1,30 +1,81 @@
+"use client";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useToast } from "@chakra-ui/toast";
 import ProfileSummary from "@/components/forms/ProfileSummary";
-
-// Replace this mock object with data fetched from Drizzle DB
-const mockData = {
-  personal: {},
-  address: {},
-  reservation: {},
-  qualification: [],
-  bank: {},
-  photo: null,
-  signature: null,
-  documents: [],
-};
+import mockDataFile from "@/data/mockData.json";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
 
 export default function SummaryPage() {
+  const [profileData, setProfileData] = useState<any>(null);
+  const router = useRouter();
+  const toast = useToast();
+
+  useEffect(() => {
+    // Try to get user data from localStorage (set during login)
+    const storedUser = localStorage.getItem("mockUser");
+    
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      setProfileData(user.profile);
+    } else {
+      // Fallback to first user in mockData.json
+      setProfileData(mockDataFile.users[0].profile);
+    }
+  }, []);
+
+  const handleEditSection = (section: string) => {
+    // Map section names to their respective routes
+    const sectionRoutes: Record<string, string> = {
+      personal: "/profile/personal",
+      address: "/profile/address",
+      contact: "/profile/personal",
+      qualification: "/profile/qualification",
+      reservation: "/profile/reservation",
+      photo: "/profile/photo",
+      bank: "/profile/bank",
+      documents: "/profile/documents",
+    };
+
+    const route = sectionRoutes[section];
+    if (route) {
+      router.push(route);
+    }
+  };
+
+  const handleSubmit = () => {
+    // Update localStorage with final data
+    const storedUser = localStorage.getItem("mockUser");
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      user.profile = profileData;
+      user.profile.submittedAt = new Date().toISOString();
+      user.profile.status = "submitted";
+      localStorage.setItem("mockUser", JSON.stringify(user));
+    }
+
+    toast({
+      title: "Application Submitted!",
+      description: "Your application has been successfully submitted.",
+      status: "success",
+      duration: 3000,
+    });
+
+    // Redirect to success page
+    router.push("/profile/success");
+  };
+
+  if (!profileData) {
+    return <div>Loading...</div>;
+  }
   return (
-    <ProfileSummary
-      data={mockData}
-      onSubmit={() => {
-        console.log("Application submitted.");
-        // redirect or show success screen
-      }}
-      onEditSection={(section) => {
-        console.log("Go to edit:", section);
-        // router.push(`/profile/${section}`);
-      }}
-    />
+    <ProtectedRoute>
+      <ProfileSummary
+        data={profileData}
+        onSubmit={handleSubmit}
+        onEditSection={handleEditSection}
+      />
+    </ProtectedRoute>
   );
 }
 

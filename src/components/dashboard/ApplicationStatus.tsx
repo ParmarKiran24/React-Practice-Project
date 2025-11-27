@@ -7,11 +7,9 @@ import {
   Flex,
   Badge,
   Button,
-  Divider,
   Link,
   Progress,
 } from "@chakra-ui/react";
-
 export default function ApplicationStatus({
   data,
   onEditSection,
@@ -84,15 +82,17 @@ export default function ApplicationStatus({
             <Text fontSize="sm" color="gray.600" mb={2}>
               Progress
             </Text>
-            <Progress
-              value={progressVal}
-              height="10px"
-              colorScheme={statusColor[data.status]}
-              borderRadius="md"
-            />
+            <Box w="100%" h="10px" bg="gray.200" borderRadius="md" overflow="hidden">
+              <Box
+                h="100%"
+                w={`${progressVal}%`}
+                bg={statusColor[data.status] === "orange" ? "orange.500" : statusColor[data.status] === "blue" ? "blue.500" : statusColor[data.status] === "purple" ? "purple.500" : statusColor[data.status] === "green" ? "green.500" : "red.500"}
+                transition="width 0.3s ease"
+              />
+            </Box>
           </Box>
 
-          <Divider my={5} />
+          <Box as="hr" my={5} borderTop="1px solid" borderColor="gray.200" />
 
           <Stack gap={2}>
             <Flex justify="space-between">
@@ -116,7 +116,7 @@ export default function ApplicationStatus({
             </Flex>
           </Stack>
 
-          <Divider my={5} />
+          <Box as="hr" my={5} borderTop="1px solid" borderColor="gray.200" />
 
           <Stack gap={3}>
             <Text fontSize="sm" color="gray.600">
@@ -124,13 +124,17 @@ export default function ApplicationStatus({
             </Text>
 
             <Flex gap={4}>
-              <Button as={Link} href={pdfDownloadUrl} isExternal colorScheme="blue">
-                Download Application PDF
-              </Button>
+              <Link href={pdfDownloadUrl} target="_blank" rel="noopener noreferrer">
+                <Button colorScheme="blue">
+                  Download Application PDF
+                </Button>
+              </Link>
 
-              <Button as={Link} href={declUrl} isExternal colorScheme="purple" variant="outline">
-                Declaration PDF
-              </Button>
+              <Link href={declUrl} target="_blank" rel="noopener noreferrer">
+                <Button colorScheme="purple" variant="outline">
+                  Declaration PDF
+                </Button>
+              </Link>
             </Flex>
           </Stack>
 

@@ -71,7 +71,7 @@ export default function PhotoSignature({
       // check dimensions by loading into an Image
       const reader = new FileReader();
       reader.onload = () => {
-        const img = new Image();
+        const img = document.createElement("img") as HTMLImageElement;
         img.onload = () => {
           const w = img.width;
           const h = img.height;
@@ -245,7 +245,7 @@ export default function PhotoSignature({
 
       {/* Helpful developer note with local PDF path (we'll transform it to URL on your side if needed) */}
       <Box mt={4} fontSize="sm" color="gray.600">
-        Guidance & design reference: <code>/mnt/data/Photo Sign.pdf</code>. :contentReference[oaicite:2]{index=2}
+        Guidance & design reference: <code>/mnt/data/Photo Sign.pdf</code>.
       </Box>
     </Box>
   );

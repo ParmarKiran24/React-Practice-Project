@@ -1,5 +1,7 @@
+"use client";
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import img from "../../assets/image 2.png";
 import i1 from "../../assets/College.png";
 import i2 from "../../assets/content creation.png";
@@ -15,6 +17,16 @@ type StatItem = {
 };
 
 export default function Welcome() {
+  const router = useRouter();
+
+  const handleGetStarted = () => {
+    router.push("/auth/signup");
+  };
+
+  const handleViewProgrammes = () => {
+    router.push("/programmes");
+  };
+
   const stats: StatItem[] = [
     { number: 30, label: "Affiliated Universities", icon: i1 },
     { number: 30, label: "Total UG Programmes", icon: i2 },
